@@ -1,7 +1,13 @@
 var Bookshelf = require('bookshelf');
+var Mongoose = require('mongoose');
 var path = require('path');
 
-var db = Bookshelf.initialize({
+Mongoose.connect('mongodb://localhost/shortly');
+
+var db = Mongoose.connection;
+
+module.exports = db;
+/*var db = Bookshelf.initialize({
   client: 'sqlite3',
   connection: {
     host: '127.0.0.1',
@@ -41,5 +47,4 @@ db.knex.schema.hasTable('users').then(function(exists) {
     });
   }
 });
-
-module.exports = db;
+*/
