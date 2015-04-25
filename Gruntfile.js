@@ -124,11 +124,9 @@ module.exports = function(grunt) {
   // Main grunt tasks
   ////////////////////////////////////////////////////
 
-  grunt.registerTask('test', ['jshint',
-    'mochaTest'
-  ]);
+  grunt.registerTask('test', ['jshint','mochaTest']);
 
-  grunt.registerTask('build', ['concat','uglify','cssmin']);
+  grunt.registerTask('build', ['jshint','concat','uglify','cssmin']);
 
   grunt.registerTask('push', ['shell']);
 
@@ -142,8 +140,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['jshint', 'concat','uglify','cssmin']);
 
-  grunt.registerTask('deploy', [
-  ]);
+  grunt.registerTask('deploy', []);
 
 
 };
