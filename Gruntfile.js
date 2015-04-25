@@ -130,11 +130,11 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', ['concat','uglify','cssmin']);
 
-  grunt.registerTask('shell', ['shell']);
+  grunt.registerTask('push', ['shell']);
 
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
-        grunt.task.run('shell');
+        grunt.task.run('push');
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
@@ -143,7 +143,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['jshint', 'concat','uglify','cssmin']);
 
   grunt.registerTask('deploy', [
-    grunt.task.run('test'),
     grunt.task.run('upload:prod')
   ]);
 
