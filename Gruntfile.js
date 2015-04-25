@@ -143,8 +143,8 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['jshint', 'concat','uglify','cssmin']);
 
   grunt.registerTask('deploy', [
-    grunt.task.run('test');
-    grunt.task.run('upload:prod');
+    grunt.task.run('test'),
+    grunt.task.run('upload:prod')
   ]);
 
 
