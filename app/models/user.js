@@ -4,7 +4,7 @@ var Promise = require('bluebird');
 var Mongoose = require('mongoose');
 var SALT_WORK_FACTOR = 10;
 
-var UserSchema = new Mongoose.schema({
+var UserSchema = new Mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true},
   links: Array,
@@ -12,11 +12,11 @@ var UserSchema = new Mongoose.schema({
   createdOn: { type: Date, default: Date.now }
 });
 
-UserSchema.methods.hasPassword = function() {
+UserSchema.methods.hashPassword = function() {
   var cipher = Promise.promisify(bcrypt.hash);
-  return cipher(this.get('password'), null, null).bind(this)
+  return cipher(this.password, null, null).bind(this)
     .then(function(hash) {
-      this.set('password', hash);
+      this.password = hash;
     });
 }
 
@@ -50,7 +50,7 @@ UserSchema.pre('save', function (next) {
   });
 });
 
-var UserModel = mongoose.model('UserModel', UserSchema);
+// var UserModel = Mongoose.Model('UserModel', UserSchema);
 
 
 
@@ -74,4 +74,4 @@ var UserModel = mongoose.model('UserModel', UserSchema);
 //   }
 // });
 
-module.exports = User;
+module.exports = Mongoose.model('users', UserSchema);

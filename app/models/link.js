@@ -1,7 +1,31 @@
 var db = require('../config');
 var crypto = require('crypto');
+var Mongoose = require('mongoose');
 
-var Link = db.Model.extend({
+
+var LinkSchema = new Mongoose.Schema({
+  createdOn: { type: Date, default: Date.now},
+  url: String,
+  base_url: String,
+  code: String,
+  title: String,
+  visits: Number
+});
+
+LinkSchema.pre('save', function(next){
+  console.log('creating link');
+  var link = this;
+  console.log('creating shasum');
+  var shasum = crypto.createHash('sha1');
+  console.log('updating shasum');
+  shasum.update(link.url)
+  console.log('setting code...')
+  this.code = shasum.digest('hex').slice(0,5);
+  console.log('done!')
+  next();
+});
+
+/*var Link = db.Model.extend({
   tableName: 'urls',
   hasTimestamps: true,
   defaults: {
@@ -14,6 +38,6 @@ var Link = db.Model.extend({
       model.set('code', shasum.digest('hex').slice(0, 5));
     });
   }
-});
+});*/
 
-module.exports = Link;
+module.exports = Mongoose.model('urls', LinkSchema);
